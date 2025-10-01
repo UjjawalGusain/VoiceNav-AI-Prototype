@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "description": "Example website navigation DAG",
+  "nodes": [
+    {
+      "id": "navbar",
+      "type": "component",
+      "title": "Top Navigation Bar",
+      "links": [
+        {"label": "Home", "target": "home"},
+        {"label": "Projects", "target": "projects"},
+        {"label": "About", "target": "about"},
+        {"label": "Experience", "target": "experience"}
+      ],
+      "external_links": [
+        {"type": "github", "description": "GitHub profile link"},
+        {"type": "linkedin", "description": "Linkedin profile link"}
+      ]
+    },
+    {
+      "id": "home",
+      "type": "page",
+      "url": "/",
+      "description": "Landing page",
+      "components": ["navbar"]
+    },
+    {
+      "id": "projects",
+      "type": "page",
+      "url": "/projects",
+      "description": "Listing of all projects",
+      "components": ["navbar"]
+    },
+    {
+      "id": "about",
+      "type": "page",
+      "url": "/about",
+      "description": "About Me page",
+      "components": ["navbar"]
+    },
+    {
+      "id": "Experience",
+      "type": "page",
+      "url": "/experience",
+      "description": "Listing of all experience",
+      "components": ["navbar"]
+    }
+  ],
+  "edges": [
+    {"from": "navbar", "to": "home", "type": "rendering"},
+    {"from": "navbar", "to": "projects", "type": "rendering"},
+    {"from": "navbar", "to": "about", "type": "rendering"},
+    {"from": "navbar", "to": "experience", "type": "rendering"}
+  ]
+}

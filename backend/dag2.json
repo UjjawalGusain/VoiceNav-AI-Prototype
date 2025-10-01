@@ -1,0 +1,264 @@
+{
+  "version": "1.0",
+  "description": "Complex portfolio website navigation DAG for thorough agent testing",
+  "nodes": [
+    {
+      "id": "navbar",
+      "type": "component",
+      "title": "Top Navigation Bar",
+      "links": [
+        {"label": "Home", "target": "home"},
+        {"label": "Projects", "target": "projects"},
+        {"label": "Blog", "target": "blog_home"},
+        {"label": "About", "target": "about"},
+        {"label": "Experience", "target": "experience"},
+        {"label": "Contact", "target": "contact"}
+      ],
+      "external_links": [
+        {"type": "github", "description": "GitHub profile"},
+        {"type": "linkedin", "description": "LinkedIn profile"},
+        {"type": "twitter", "description": "Twitter profile"}
+      ]
+    },
+    {
+      "id": "home",
+      "type": "page",
+      "url": "/",
+      "title": "Home Page",
+      "description": "Landing page with summary and featured sections",
+      "components": ["navbar", "footer"],
+      "children": ["featured_projects", "recent_blog_posts"]
+    },
+    {
+      "id": "featured_projects",
+      "type": "dynamic_collection",
+      "title": "Featured Projects",
+      "parent": "home",
+      "content_type": "project",
+      "discovery_hint": {
+        "selector": ".featured-projects a.project-link",
+        "attribute_for_title": "textContent",
+        "attribute_for_url": "href"
+      }
+    },
+    {
+      "id": "recent_blog_posts",
+      "type": "dynamic_collection",
+      "title": "Recent Blog Posts",
+      "parent": "home",
+      "content_type": "blog_post",
+      "discovery_hint": {
+        "selector": ".recent-posts li a.post-link",
+        "attribute_for_title": "textContent",
+        "attribute_for_url": "href"
+      }
+    },
+    {
+      "id": "projects",
+      "type": "page",
+      "url": "/projects",
+      "title": "Projects",
+      "description": "All projects listing with filters",
+      "components": ["navbar", "footer"],
+      "children": ["project_list", "project_tags"]
+    },
+    {
+      "id": "project_list",
+      "type": "dynamic_collection",
+      "title": "Project List",
+      "parent": "projects",
+      "content_type": "project",
+      "discovery_hint": {
+        "selector": ".project-list > div.project-item > a",
+        "attribute_for_title": "textContent",
+        "attribute_for_url": "href"
+      }
+    },
+    {
+      "id": "project_tags",
+      "type": "component",
+      "title": "Project Tags Filter",
+      "parent": "projects",
+      "links": [
+        {"label": "React", "target": "projects?tag=react"},
+        {"label": "Python", "target": "projects?tag=python"},
+        {"label": "Machine Learning", "target": "projects?tag=ml"}
+      ]
+    },
+    {
+      "id": "blog_home",
+      "type": "page",
+      "url": "/blog",
+      "title": "Blog Homepage",
+      "description": "Blog landing page with categories and featured post",
+      "components": ["navbar", "footer"],
+      "children": ["blog_categories", "featured_blog_post"]
+    },
+    {
+      "id": "blog_categories",
+      "type": "component",
+      "title": "Blog Categories",
+      "parent": "blog_home",
+      "links": [
+        {"label": "Tech", "target": "blog_category_tech"},
+        {"label": "Career", "target": "blog_category_career"},
+        {"label": "Personal", "target": "blog_category_personal"}
+      ]
+    },
+    {
+      "id": "featured_blog_post",
+      "type": "page",
+      "url": "/blog/2025/launching-portfolio",
+      "title": "Launching Portfolio Blog Post",
+      "description": "Featured blog announcement post",
+      "components": ["navbar", "footer"]
+    },
+    {
+      "id": "blog_category_tech",
+      "type": "dynamic_collection",
+      "title": "Tech Blog Posts",
+      "parent": "blog_home",
+      "content_type": "blog_post",
+      "discovery_hint": {
+        "selector": ".category-tech h2 a",
+        "attribute_for_title": "textContent",
+        "attribute_for_url": "href"
+      }
+    },
+    {
+      "id": "about",
+      "type": "page",
+      "url": "/about",
+      "title": "About Me",
+      "description": "Detailed about me page with resume and photo gallery",
+      "components": ["navbar", "footer"],
+      "children": ["resume_section", "photo_gallery"]
+    },
+    {
+      "id": "resume_section",
+      "type": "component",
+      "title": "Resume",
+      "parent": "about",
+      "links": [
+        {"label": "Download PDF", "target": "about_resume_pdf"}
+      ]
+    },
+    {
+      "id": "about_resume_pdf",
+      "type": "external_link",
+      "title": "Resume PDF",
+      "url": "https://example.com/files/ujjawal_resume.pdf"
+    },
+    {
+      "id": "photo_gallery",
+      "type": "dynamic_collection",
+      "title": "Photo Gallery",
+      "parent": "about",
+      "content_type": "image",
+      "discovery_hint": {
+        "selector": ".photo-gallery img",
+        "attribute_for_title": "alt",
+        "attribute_for_url": "src"
+      }
+    },
+    {
+      "id": "experience",
+      "type": "page",
+      "url": "/experience",
+      "title": "Experience",
+      "description": "Professional experience with timeline and project highlights",
+      "components": ["navbar", "footer"],
+      "children": ["timeline", "project_highlights"]
+    },
+    {
+      "id": "timeline",
+      "type": "component",
+      "title": "Experience Timeline",
+      "parent": "experience",
+      "discovery_hint": {
+        "selector": ".timeline-item",
+        "attribute_for_title": "data-job-title",
+        "attribute_for_url": ""
+      }
+    },
+    {
+      "id": "project_highlights",
+      "type": "dynamic_collection",
+      "title": "Highlighted Projects",
+      "parent": "experience",
+      "content_type": "project",
+      "discovery_hint": {
+        "selector": ".highlighted-project a",
+        "attribute_for_title": "textContent",
+        "attribute_for_url": "href"
+      }
+    },
+    {
+      "id": "contact",
+      "type": "page",
+      "url": "/contact",
+      "title": "Contact Me",
+      "description": "Contact form and social media links",
+      "components": ["navbar", "footer"],
+      "external_links": [
+        {"type": "email", "description": "Email for contact"},
+        {"type": "linkedin", "description": "LinkedIn profile"}
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "component",
+      "title": "Footer Bar",
+      "links": [
+        {"label": "Privacy Policy", "target": "privacy_policy"},
+        {"label": "Terms of Service", "target": "terms_of_service"}
+      ]
+    },
+    {
+      "id": "privacy_policy",
+      "type": "page",
+      "url": "/privacy",
+      "title": "Privacy Policy",
+      "components": ["footer"]
+    },
+    {
+      "id": "terms_of_service",
+      "type": "page",
+      "url": "/terms",
+      "title": "Terms of Service",
+      "components": ["footer"]
+    }
+  ],
+  "edges": [
+    {"from": "navbar", "to": "home", "type": "rendering"},
+    {"from": "navbar", "to": "projects", "type": "rendering"},
+    {"from": "navbar", "to": "blog_home", "type": "rendering"},
+    {"from": "navbar", "to": "about", "type": "rendering"},
+    {"from": "navbar", "to": "experience", "type": "rendering"},
+    {"from": "navbar", "to": "contact", "type": "rendering"},
+
+    {"from": "home", "to": "featured_projects", "type": "contains"},
+    {"from": "home", "to": "recent_blog_posts", "type": "contains"},
+
+    {"from": "projects", "to": "project_list", "type": "contains"},
+    {"from": "projects", "to": "project_tags", "type": "contains"},
+    {"from": "project_tags", "to": "projects", "type": "filters"},
+
+    {"from": "blog_home", "to": "blog_categories", "type": "contains"},
+    {"from": "blog_home", "to": "featured_blog_post", "type": "contains"},
+    {"from": "blog_categories", "to": "blog_category_tech", "type": "category"},
+    
+    {"from": "about", "to": "resume_section", "type": "contains"},
+    {"from": "about", "to": "photo_gallery", "type": "contains"},
+    {"from": "resume_section", "to": "about_resume_pdf", "type": "external_link"},
+
+    {"from": "experience", "to": "timeline", "type": "contains"},
+    {"from": "experience", "to": "project_highlights", "type": "contains"},
+
+    {"from": "contact", "to": "linkedin", "type": "external_link"},
+    {"from": "contact", "to": "email", "type": "external_link"},
+
+    {"from": "footer", "to": "privacy_policy", "type": "rendering"},
+    {"from": "footer", "to": "terms_of_service", "type": "rendering"}
+  ]
+}
