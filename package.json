@@ -1,0 +1,25 @@
+{
+  "name": "voicenav-ai",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "python -m backend.main",
+    "client": "npx http-server frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UjjawalGusain/VoiceNav-AI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UjjawalGusain/VoiceNav-AI/issues"
+  },
+  "homepage": "https://github.com/UjjawalGusain/VoiceNav-AI#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
