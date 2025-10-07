@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "description": "VoiceNav Test Site Navigation DAG",
+  "nodes": [
+    {
+      "id": "navbar",
+      "type": "component",
+      "title": "Top Navigation Bar",
+      "links": [
+        {"label": "Home", "target": "home"},
+        {"label": "About", "target": "about"},
+        {"label": "Contact", "target": "contact"},
+        {"label": "Login", "target": "login"}
+      ]
+    },
+    {
+      "id": "home",
+      "type": "page",
+      "url": "/index.html",
+      "description": "Landing page",
+      "components": ["navbar"]
+    },
+    {
+      "id": "login",
+      "type": "page",
+      "url": "/login.html",
+      "description": "Login page",
+      "components": ["navbar"]
+    },
+    {
+      "id": "about",
+      "type": "page",
+      "url": "/about.html",
+      "description": "About page with mission statement and team members",
+      "components": ["navbar"]
+    },
+    {
+      "id": "contact",
+      "type": "page",
+      "url": "/contact.html",
+      "description": "Contact page",
+      "components": ["navbar"]
+    }
+  ],
+  "edges": [
+    {"from": "navbar", "to": "home", "type": "navigation"},
+    {"from": "navbar", "to": "about", "type": "navigation"},
+    {"from": "navbar", "to": "contact", "type": "navigation"},
+    {"from": "navbar", "to": "login", "type": "navigation"}
+  ]
+}

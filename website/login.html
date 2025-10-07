@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - VoiceNav Test</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="../frontend/src/voiceNav.js" type="module" defer></script>
+    <script src="./app.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Login Page</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="loginMain">
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Username">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Password">
+
+            <button type="submit" id="loginBtn">Login</button>
+        </form>
+
+        <div id="loginStatus"></div>
+        <div id="promoBanner"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VoiceNav Test Site</p>
+    </footer>
+</body>
+</html>

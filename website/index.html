@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - VoiceNav Test</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="../frontend/src/voiceNav.js" type="module" defer></script>
+    <script src="./app.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Welcome to VoiceNav Demo</h1>
+        <nav>
+            <ul id="dynamicNav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="features">
+            <h2>Latest Features</h2>
+            <p>Test navigation, clicking, input, and forms across multiple pages.</p>
+            <button id="startTour">Start Tour</button>
+            <button class="demo-btn">Learn More</button>
+        </section>
+
+        <section id="dynamicGallery">
+            <h2>Gallery</h2>
+            <div class="gallery">
+                <img src="https://picsum.photos/200/150?1" alt="Sample Image 1">
+                <img src="https://picsum.photos/200/150?2" alt="Sample Image 2">
+                <img src="https://picsum.photos/200/150?3" alt="Sample Image 3">
+            </div>
+        </section>
+
+        <section id="newsSection">
+            <h2>Dynamic News Feed</h2>
+            <ul id="newsList"></ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VoiceNav Test Site</p>
+    </footer>
+</body>
+</html>

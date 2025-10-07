@@ -28,7 +28,7 @@ async function buttonClick() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         session_id: sessionId,
-        dag_url: "https://storage.googleapis.com/voice_recording_bucket/dag2.json",
+        dag_url: "https://storage.googleapis.com/voice_recording_bucket/dag_demo.json",
         query: data.transcription
       }),
     });
@@ -67,7 +67,7 @@ function getButton(config) {
   button.style.padding = 0;
 
   const img = document.createElement("img");
-  img.src = "public/icon.png";  
+  img.src = "https://storage.googleapis.com/voice_recording_bucket/icon.png";  
   img.alt = "VoiceNav Icon";
   img.style.width = "50px"; 
   img.style.height = "50px";
