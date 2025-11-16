@@ -48,6 +48,7 @@ def execute_instruction():
 
     try:
         execution_obj = worker.receive_instruction(instruction, dom_snapshot)
+        logger.info(execution_obj)
         return jsonify({"execution": execution_obj.model_dump()})
     except Exception as e:
         logger.exception("Error while generating execution object")

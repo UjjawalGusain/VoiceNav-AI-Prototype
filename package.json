@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "python -m backend.main",
-    "client": "npx http-server frontend"
+    "client": "npx http-server . -c-1"
   },
   "repository": {
     "type": "git",

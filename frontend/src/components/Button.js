@@ -2,13 +2,24 @@ import { recordAudio } from "../utils/recordVoice.js";
 import ChatWidget from "./ChatWidget.js";
 import { getOrCreateSessionId } from "../utils/sessionId.js";
 import { apis } from "../../api.js";
+import VoiceNavAgent from "../VoiceNavAgent/VoiceNavAgent.js";
 
 ChatWidget.init();
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function countdown(seconds) {
+  for (let i = seconds; i > 0; i--) {
+    ChatWidget.appendMessage("System", `Returning in ${i}...`);
+    await delay(1000);
+  }
+}
 async function buttonClick() {
   try {
     ChatWidget.show();
-
     ChatWidget.appendMessage("System", "Recording...");
+
     const audioBase64 = await recordAudio(10, "temp.wav");
     ChatWidget.appendMessage("System", "Processing...");
 
@@ -18,24 +29,60 @@ async function buttonClick() {
       body: JSON.stringify({ audio_base64: audioBase64, audio_mime_type: "audio/wav" }),
     });
 
+
     const data = await response.json();
-    ChatWidget.appendMessage("You", data.transcription || "No transcription returned");
+    const transcription = data.transcription || "No transcription returned";
+    console.log("Transcription: ", data.transcription );
+    let i = 0
+
+    ChatWidget.appendMessage("You", transcription);
 
     const sessionId = getOrCreateSessionId();
+    const agent = new VoiceNavAgent(sessionId, document.body);
 
-    const executionPipelineResponse = await fetch(apis.navigate, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        session_id: sessionId,
-        dag_url: "https://storage.googleapis.com/voice_recording_bucket/dag_demo.json",
-        query: data.transcription
-      }),
-    });
+    ChatWidget.appendMessage("System", "Planning navigation...");
 
-    const executionPipeline = await executionPipelineResponse.json();
-    console.log(executionPipeline);
-    
+    const currentPath = window.location.pathname;
+
+    // Plan execution
+    await agent.planExecution(transcription, currentPath);
+
+    if (!agent.executionPipeline.length) {
+      ChatWidget.appendMessage("System", "No navigation steps returned by Foreman.");
+      return;
+    }
+
+    // Execute steps one by one
+    for (let stepIndex = 0; stepIndex < agent.executionPipeline.length; stepIndex++) {
+      const step = agent.executionPipeline[stepIndex];
+      ChatWidget.appendMessage(
+        "System",
+        `Executing step ${step.step_number}: ${step.action} from ${step.from_page} → ${step.to_page}`
+      );
+
+      const result = await agent.executeStep(step);
+
+      if (result.error) {
+        ChatWidget.appendMessage(
+          "System",
+          `Worker failed at step ${step.step_number}: ${result.error}. Asking Foreman to replan...`
+        );
+        await agent.planExecution(transcription);
+        stepIndex = -1; // restart execution from new pipeline
+        continue;
+      }
+
+      // Apply step locally
+      agent.applyExecution(result.execution);
+
+      ChatWidget.appendMessage(
+        "System",
+        `Step ${step.step_number} executed successfully.`
+      );
+    }
+
+    // ChatWidget.appendMessage("System", "Navigation completed.");
+    console.log("[AGENT] Full execution log:", agent.executionLog);
 
   } catch (err) {
     console.error(err);
@@ -44,9 +91,9 @@ async function buttonClick() {
 }
 
 
-
 function getButton(config) {
   const button = document.createElement("button");
+  button.type = "button"; 
   
   button.style.position = "fixed";
   button.style.bottom = "20px";

@@ -41,14 +41,16 @@ def plan_navigation():
     session_id = data.get("session_id")
     dag_url = data.get("dag_url")
     query = data.get("query")
-    if not session_id or not dag_url or not query:
-        return jsonify({"status": "error", "error": "Missing session_id, dag_url, or query"}), 400
+    currentPath = data.get("currentPath")
+    if not session_id or not dag_url or not query or not currentPath:
+        return jsonify({"status": "error", "error": "Missing session_id, dag_url, query, or currentPath"}), 400
     if not dag_url.startswith(("http://", "https://")):
         return jsonify({"status": "error", "error": "Invalid dag_url"}), 400
 
     try:
         agent = get_agent(dag_url)
-        nav_output = agent.plan_route(query, session_id)
+        nav_output = agent.plan_route(query, session_id, currentPath)
+        logger.info(nav_output)
         return jsonify({
             "status": "success",
             "session_id": session_id,

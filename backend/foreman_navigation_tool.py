@@ -75,20 +75,22 @@ class ForemanPlannerAgent:
         dag_text = "\n\n".join([doc.page_content for doc in documents])
         return dag_text
 
-    def plan_route(self, query: str, session_id: str) -> NavigationOutput:
+    def plan_route(self, query: str, session_id: str, currentPath: str) -> NavigationOutput:
         """
         Compute a navigation route based on the DAG, tracking session history via thread_id.
 
         Args:
             query: The user's navigation request.
             session_id: Unique session/thread identifier.
+            currentPath: Current page of the website
 
         Returns:
             NavigationOutput object containing route steps or error.
         """
+        user_content = f"Current page: {currentPath}\nUser query: {query}"
+
         response = self.agent.invoke(
-            {"messages": [{"role": "user", "content": query}]},
-            # Thread/session management via config["configurable"]["thread_id"]
+            {"messages": [{"role": "user", "content": user_content}]},
             config={"configurable": {"thread_id": session_id}},
         )
         structured_data = response.get("structured_response")
@@ -96,6 +98,7 @@ class ForemanPlannerAgent:
         if structured_data:
             return structured_data
         return NavigationOutput(route=None, error="No structured response returned from agent.")
+
 
     def plan_route_json(self, query: str, session_id: str) -> str:
         """
