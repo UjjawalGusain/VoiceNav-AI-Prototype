@@ -2,7 +2,7 @@ from langchain.agents import create_agent
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain_community.document_loaders import JSONLoader
 from langchain.agents.structured_output import ToolStrategy
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, AfterValidator, ValidationError
 from typing import List, Literal, Optional
 from backend.prompts import foreman_system_prompt
 
@@ -14,7 +14,9 @@ class RouteStep(BaseModel):
     )
     from_page: str = Field(description="Source page or component")
     to_page: str = Field(description="Target page or component")
-    location: Optional[str] = Field(default=None, description="UI location if known")
+    location: Optional[str] = Field(default=None, description="UI location or descriptive reference")
+    value: Optional[str] = Field(default=None, description="Text to input for 'input' actions")
+
 
 class NavigationOutput(BaseModel):
     route: Optional[List[RouteStep]] = Field(default=None, description="Ordered navigation steps")
@@ -100,18 +102,19 @@ class ForemanPlannerAgent:
         return NavigationOutput(route=None, error="No structured response returned from agent.")
 
 
-    def plan_route_json(self, query: str, session_id: str) -> str:
+    def plan_route_json(self, query: str, session_id: str, currentPath: str) -> str:
         """
         Return the navigation plan as a pretty-printed JSON string (session-aware).
 
         Args:
             query: The user's navigation request.
             session_id: Unique session/thread identifier.
+            currentPath: Current page of the website
 
         Returns:
             Pretty-printed JSON string of the navigation route.
         """
-        navigation_output = self.plan_route(query, session_id)
+        navigation_output = self.plan_route(query, session_id, currentPath)
         return navigation_output.model_dump_json(indent=2)
 
     def clear_session(self, session_id: str):

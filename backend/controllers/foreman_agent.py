@@ -38,6 +38,8 @@ def plan_navigation():
     if not request.is_json:
         return jsonify({"status": "error", "error": "Expected JSON request"}), 400
     data = request.get_json()
+    print("data: ", data)
+
     session_id = data.get("session_id")
     dag_url = data.get("dag_url")
     query = data.get("query")

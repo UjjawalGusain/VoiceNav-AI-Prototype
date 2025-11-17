@@ -62,6 +62,8 @@ class VoiceNavAgent {
         const domSnapshot = this.vdomHandler.getSafeVirtualDomSnapshot();
         const domHtml = this.serializeDOM(domSnapshot);
 
+        console.log("Dom html: ", domHtml);
+        
         const resp = await fetch(apis.worker, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -73,6 +75,9 @@ class VoiceNavAgent {
         });
 
         const result = await resp.json();
+
+        console.log("Result of this step: ", result);
+        
         this.executionLog.push({ step, result });
         return result;
     }
@@ -126,6 +131,8 @@ class VoiceNavAgent {
     }
 
     applyExecution(execution) {
+        console.log("We are trying to apply execution: ", execution);
+        
         if (execution.action === "click") {
             const el = document.querySelector(execution.target);
             if (el) el.click();
