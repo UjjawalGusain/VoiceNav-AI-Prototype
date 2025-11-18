@@ -5,6 +5,7 @@ from langchain.agents.structured_output import ToolStrategy
 from pydantic import BaseModel, Field, AfterValidator, ValidationError
 from typing import List, Literal, Optional
 from backend.prompts import foreman_system_prompt
+from langchain_core.messages.human import HumanMessage
 
 
 class RouteStep(BaseModel):
@@ -91,10 +92,16 @@ class ForemanPlannerAgent:
         """
         user_content = f"Current page: {currentPath}\nUser query: {query}"
 
+        messages = [
+            HumanMessage(content=f"Current page: {currentPath}"),
+            HumanMessage(content=f"User query: {query}"),
+        ]
+
         response = self.agent.invoke(
-            {"messages": [{"role": "user", "content": user_content}]},
+            {"messages": [msg.dict() for msg in messages]},
             config={"configurable": {"thread_id": session_id}},
         )
+        
         structured_data = response.get("structured_response")
 
         if structured_data:

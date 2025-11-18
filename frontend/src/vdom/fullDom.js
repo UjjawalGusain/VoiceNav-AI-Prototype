@@ -68,6 +68,9 @@ export class VDomHandler {
 
     _buildVirtualDom(root, parent = null) {
         if (root.tagName === "SCRIPT") return null;
+        if (root.classList && root.classList.contains('voicenav-vnode-ignore')) {
+            return null;
+        }
         const vNode = this._createVNode(root, parent);
 
         for (const child of root.childNodes) {
@@ -82,8 +85,14 @@ export class VDomHandler {
 
     _renderAddedNodes(addedNodes) {
         for (const node of addedNodes) {
+            if (node.classList && node.classList.contains('voicenav-vnode-ignore')) {
+                continue;
+            }
             const parentNode = node.parentNode;
             const parentVDomNode = this.#domToVNodeMap.get(parentNode);
+            if (!parentVDomNode) {
+                continue;
+            }
             const vDomNode = this._buildVirtualDom(node, parentVDomNode);
             parentVDomNode.options.children.push(vDomNode);
             this.#domToVNodeMap.set(node, vDomNode);

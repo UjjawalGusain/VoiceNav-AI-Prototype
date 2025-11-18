@@ -138,7 +138,11 @@ class VoiceNavAgent {
             if (el) el.click();
         } else if (execution.action === "input") {
             const el = document.querySelector(execution.target);
+            el.dispatchEvent(new Event('input', { bubbles: true }));
             if (el) el.value = execution.value;
+        } else if (execution.action === "submit") {
+            const el = document.querySelector(execution.target);
+            if (el) el.click(); 
         }
     }
 }

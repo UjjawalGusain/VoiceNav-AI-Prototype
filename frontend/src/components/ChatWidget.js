@@ -26,6 +26,7 @@ const ChatWidget = (() => {
       overflowY: "auto",
       fontSize: "14px",
     });
+    chatContainer.classList.add("voicenav-vnode-ignore");
     chatContainer.appendChild(messagesDiv);
 
     document.body.appendChild(chatContainer);

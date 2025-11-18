@@ -1,11 +1,13 @@
 import logging
 import os
 from pydantic import BaseModel, Field
-from typing import Optional, Literal, Dict, Any
+from typing import Optional, Literal, Dict, Any, Union
 from langchain.agents import create_agent
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain.agents.structured_output import ToolStrategy
+from langchain_core.messages.human import HumanMessage
 from backend.prompts import worker_system_prompt 
+
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "backend/gemini_credentials.json"
 logger = logging.getLogger(__name__)
 
@@ -48,20 +50,18 @@ class WorkerAgent:
             checkpointer=self.checkpointer,
         )
 
-    def receive_instruction(self, instruction: Dict[str, Any], dom_snapshot: str) -> ExecutionObject:
-        """
-        Ask the LLM to generate a proper executionObject given the instruction + DOM.
-        """
+
+    def receive_instruction(self, instruction: Dict[str, Any], dom_snapshot: str) -> Union[ExecutionObject, WorkerError]:
         logger.info(f"[Worker {self.session_id}] Received instruction: {instruction}")
 
-        user_prompt = (
-            f"Instruction: {instruction}\n\n"
-            f"DOM Snapshot:\n{dom_snapshot}\n\n"
-            "Generate a valid executionObject."
-        )
+        messages = [
+            HumanMessage(content=f"Instruction: {instruction}"),
+            HumanMessage(content=f"DOM Snapshot:\n{dom_snapshot}"),
+            HumanMessage(content="Generate a valid executionObject.")
+        ]
 
         response = self.agent.invoke(
-            {"messages": [{"role": "user", "content": user_prompt}]},
+            {"messages": [msg.dict() for msg in messages]},  # This lets LangChain create the "parts" field internally
             config={"configurable": {"thread_id": self.session_id}},
         )
 
@@ -74,7 +74,7 @@ class WorkerAgent:
             })
             return structured_data
 
-        return WorkerError(error="No structured response returned").model_dump()
+        return WorkerError(error="No structured response returned")
 
     def get_history(self):
         return self.history

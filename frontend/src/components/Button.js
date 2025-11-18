@@ -100,6 +100,10 @@ async function buttonClick() {
 
         agent.applyExecution(result.execution);
 
+        if(step.action === 'input' || step.action == 'submit') {
+          restoreAndRun();
+        }
+
         // ChatWidget.appendMessage("System", "Navigation completed.");
         console.log("[AGENT] Full execution log:", agent.executionLog);
     } catch (err) {
@@ -157,8 +161,8 @@ export async function restoreAndRun() {
                 );
 
                 agent.applyExecution(result.execution);
-
-                if(step.action === 'input') {
+                
+                if(step.action === 'input' || step.action == 'submit') {
                   restoreAndRun();
                 }
 
@@ -191,6 +195,7 @@ function getButton(config) {
     button.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
     button.style.zIndex = 9999;
     button.style.padding = 0;
+    button.classList.add("voicenav-vnode-ignore")
 
     const img = document.createElement("img");
     img.src = "https://storage.googleapis.com/voice_recording_bucket/icon.png";
