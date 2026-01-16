@@ -1,0 +1,176 @@
+{
+  "id": "111",
+  "version": "1",
+  "description": "Dag for Ujjawal's Portfolio",
+  "nodes": [
+    {
+      "id": "home_page",
+      "type": "page",
+      "title": "home",
+      "routeHint": {
+        "pattern": "/home",
+        "match": "exact"
+      },
+      "domHints": {
+        "mustContain": [
+          "navbar"
+        ]
+      },
+      "description": "Home page of the portfolio. Contains basic information, featured projects, and quotes.",
+      "edges": [
+        {
+          "label": "About",
+          "target": "about_page",
+          "transition": "hard"
+        },
+        {
+          "label": "Projects",
+          "target": "projects_page",
+          "transition": "hard"
+        },
+        {
+          "label": "GitHub",
+          "transition": "hard",
+          "external": true
+        },
+        {
+          "label": "LinkedIn",
+          "transition": "hard",
+          "external": true
+        }
+      ]
+    },
+    {
+      "id": "about_page",
+      "type": "page",
+      "title": "about",
+      "routeHint": {
+        "pattern": "/about",
+        "match": "exact"
+      },
+      "domHints": {
+        "mustContain": [
+          "navbar"
+        ]
+      },
+      "description": "About page describing Ujjawal Gusain and his motivation for software development.",
+      "edges": [
+        {
+          "label": "Home",
+          "target": "home_page",
+          "transition": "hard"
+        },
+        {
+          "label": "Projects",
+          "target": "projects_page",
+          "transition": "hard"
+        },
+        {
+          "label": "Experience",
+          "target": "experience_page",
+          "transition": "hard"
+        },
+        {
+          "label": "GitHub",
+          "transition": "hard",
+          "external": true
+        },
+        {
+          "label": "LinkedIn",
+          "transition": "hard",
+          "external": true
+        }
+      ]
+    },
+    {
+      "id": "projects_page",
+      "type": "page",
+      "title": "projects",
+      "routeHint": {
+        "pattern": "/projects",
+        "match": "exact"
+      },
+      "domHints": {
+        "mustContain": [
+          "navbar",
+          "project-card"
+        ]
+      },
+      "description": "Projects page showing multiple dynamic project cards and repository links.",
+      "edges": [
+        {
+          "label": "Home",
+          "target": "home_page",
+          "transition": "hard"
+        },
+        {
+          "label": "About",
+          "target": "about_page",
+          "transition": "hard"
+        },
+        {
+          "label": "Experience",
+          "target": "experience_page",
+          "transition": "hard"
+        },
+        {
+          "label": "Open Project",
+          "target": "project_detail_page",
+          "transition": "hard"
+        },
+        {
+          "label": "GitHub",
+          "transition": "hard",
+          "external": true
+        },
+        {
+          "label": "LinkedIn",
+          "transition": "hard",
+          "external": true
+        }
+      ]
+    },
+    {
+      "id": "experience_page",
+      "type": "page",
+      "title": "experience",
+      "routeHint": {
+        "pattern": "/experience",
+        "match": "exact"
+      },
+      "domHints": {
+        "mustContain": [
+          "navbar"
+        ]
+      },
+      "description": "Experience page detailing work, internships, and technical background.",
+      "edges": [
+        {
+          "label": "Home",
+          "target": "home_page",
+          "transition": "hard"
+        },
+        {
+          "label": "About",
+          "target": "about_page",
+          "transition": "hard"
+        },
+        {
+          "label": "Projects",
+          "target": "projects_page",
+          "transition": "hard"
+        },
+        {
+          "label": "GitHub",
+          "transition": "hard",
+          "external": true
+        },
+        {
+          "label": "LinkedIn",
+          "transition": "hard",
+          "external": true
+        }
+      ]
+    }
+  ]
+}
