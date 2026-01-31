@@ -1,10 +1,10 @@
 {
-  "id": "111",
+  "id": "c1b8a9f4-8a4d-4f2b-bc92-2b2d63f3c1e7",
   "version": "1",
   "description": "Dag for Ujjawal's Portfolio",
   "nodes": [
     {
-      "id": "home_page",
+      "id": "0b4c5c41-9b59-4b59-9c88-27c6a8bfc4c2",
       "type": "page",
       "title": "home",
       "routeHint": {
@@ -12,20 +12,18 @@
         "match": "exact"
       },
       "domHints": {
-        "mustContain": [
-          "navbar"
-        ]
+        "mustContain": ["navbar"]
       },
       "description": "Home page of the portfolio. Contains basic information, featured projects, and quotes.",
       "edges": [
         {
           "label": "About",
-          "target": "about_page",
+          "target": "7b2f8a73-2f6c-4f19-8a2e-2bdfbffcb7ae",
           "transition": "hard"
         },
         {
           "label": "Projects",
-          "target": "projects_page",
+          "target": "4a8a6e91-8c44-4c57-a9c4-64c39a8a1f92",
           "transition": "hard"
         },
         {
@@ -41,7 +39,7 @@
       ]
     },
     {
-      "id": "about_page",
+      "id": "7b2f8a73-2f6c-4f19-8a2e-2bdfbffcb7ae",
       "type": "page",
       "title": "about",
       "routeHint": {
@@ -49,25 +47,23 @@
         "match": "exact"
       },
       "domHints": {
-        "mustContain": [
-          "navbar"
-        ]
+        "mustContain": ["navbar"]
       },
       "description": "About page describing Ujjawal Gusain and his motivation for software development.",
       "edges": [
         {
           "label": "Home",
-          "target": "home_page",
+          "target": "0b4c5c41-9b59-4b59-9c88-27c6a8bfc4c2",
           "transition": "hard"
         },
         {
           "label": "Projects",
-          "target": "projects_page",
+          "target": "4a8a6e91-8c44-4c57-a9c4-64c39a8a1f92",
           "transition": "hard"
         },
         {
           "label": "Experience",
-          "target": "experience_page",
+          "target": "d9e0a5e2-8c89-4a2f-9b0c-4f21c4e6d1b3",
           "transition": "hard"
         },
         {
@@ -83,7 +79,7 @@
       ]
     },
     {
-      "id": "projects_page",
+      "id": "4a8a6e91-8c44-4c57-a9c4-64c39a8a1f92",
       "type": "page",
       "title": "projects",
       "routeHint": {
@@ -91,31 +87,28 @@
         "match": "exact"
       },
       "domHints": {
-        "mustContain": [
-          "navbar",
-          "project-card"
-        ]
+        "mustContain": ["navbar", "project-card"]
       },
       "description": "Projects page showing multiple dynamic project cards and repository links.",
       "edges": [
         {
           "label": "Home",
-          "target": "home_page",
+          "target": "0b4c5c41-9b59-4b59-9c88-27c6a8bfc4c2",
           "transition": "hard"
         },
         {
           "label": "About",
-          "target": "about_page",
+          "target": "7b2f8a73-2f6c-4f19-8a2e-2bdfbffcb7ae",
           "transition": "hard"
         },
         {
           "label": "Experience",
-          "target": "experience_page",
+          "target": "d9e0a5e2-8c89-4a2f-9b0c-4f21c4e6d1b3",
           "transition": "hard"
         },
         {
           "label": "Open Project",
-          "target": "project_detail_page",
+          "target": "e3f3b9c2-1e7d-4b12-9a8f-5c92f1c5a4d8",
           "transition": "hard"
         },
         {
@@ -131,7 +124,7 @@
       ]
     },
     {
-      "id": "experience_page",
+      "id": "d9e0a5e2-8c89-4a2f-9b0c-4f21c4e6d1b3",
       "type": "page",
       "title": "experience",
       "routeHint": {
@@ -139,25 +132,23 @@
         "match": "exact"
       },
       "domHints": {
-        "mustContain": [
-          "navbar"
-        ]
+        "mustContain": ["navbar"]
       },
       "description": "Experience page detailing work, internships, and technical background.",
       "edges": [
         {
           "label": "Home",
-          "target": "home_page",
+          "target": "0b4c5c41-9b59-4b59-9c88-27c6a8bfc4c2",
           "transition": "hard"
         },
         {
           "label": "About",
-          "target": "about_page",
+          "target": "7b2f8a73-2f6c-4f19-8a2e-2bdfbffcb7ae",
           "transition": "hard"
         },
         {
           "label": "Projects",
-          "target": "projects_page",
+          "target": "4a8a6e91-8c44-4c57-a9c4-64c39a8a1f92",
           "transition": "hard"
         },
         {
